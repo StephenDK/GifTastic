@@ -30,9 +30,34 @@ console.log(myInterests)
       }
 
 
-renderButtons();
+      // This function handles events for buttons.
+      $("#add-gif").on("click", function(event) {
+      	// prevent default button behavior
+      	event.preventDefault();
 
+      	// grab input from textbox
+      	var gif = $("#gify-Input").val().trim()
+
+      	// add gify search option to myInterests array.
+      	myInterests.push(gif);
+
+      	renderButtons();
+      });
+
+    function displayGifInfo() {
+      var gif = $(this).attr("data-name");
+      var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cats";
+      
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+      .done(function(response) {
+        
+      })
+    }
 
 // Section 3: Main Process
 //  ===============================================================
-
+displayGifInfo();
+renderButtons();
