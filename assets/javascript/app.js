@@ -48,7 +48,8 @@ console.log(myInterests)
       var gif = $(this).attr("data-name");
       
 
-      var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&q=" + gif + "&limit=10&rating=r";
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+        gif + "&api_key=dc6zaTOxFJmzC&limit=10";
       
       $.ajax({
         url: queryURL,
@@ -56,13 +57,15 @@ console.log(myInterests)
       })
       .done(function(response) {
         
-        for (var i = 1; i < 11; i++) {
+        for (var i = 0; i < 11; i++) {
         // save image_orignal_url property
-        var imageURL = response.data.fixed_height_downsampled_url;
+        var imageURL = response.data[i].images.fixed_height_still.url;
 
 
+        console.log(response);
+        console.log(response.data[i].images.fixed_height_still.url);
 
-        console.log(response.data);
+        // console.log(response.data[i].images.fixed_height_still);
         // create and store image tag
         var gifImage = $("<img>");
 
@@ -71,8 +74,8 @@ console.log(myInterests)
         // gifImage.attr("alt", "gif image");
 
         $("#gify-view").prepend(gifImage)
-      }
-        console.log(response);
+       }
+        // console.log(response);
       });
     }
 
