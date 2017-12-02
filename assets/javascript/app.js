@@ -46,7 +46,7 @@ console.log(myInterests)
 
     function displayGifInfo() {
       var gif = $(this).attr("data-name");
-      var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cats";
+      var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&q=" + gif + "&limit=10&rating=r";
       
       $.ajax({
         url: queryURL,
@@ -54,10 +54,28 @@ console.log(myInterests)
       })
       .done(function(response) {
         
-      })
+        // save image_orignal_url property
+        var imageURL = response.data.image_orignal_url;
+
+
+        
+        console.log(response.data.image_orignal_url);
+        // create and store image tag
+        var gifImage = $("<img>");
+
+        // setting the gifImage src attributes to imageURL
+        gifImage.attr("src", imageURL);
+        // gifImage.attr("alt", "gif image");
+
+        $("#gify-view").prepend(gifImage)
+
+        console.log(response);
+      });
     }
 
+      $(document).on("click", ".gif", displayGifInfo);
+   
 // Section 3: Main Process
 //  ===============================================================
-displayGifInfo();
+
 renderButtons();
