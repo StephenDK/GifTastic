@@ -56,14 +56,19 @@ console.log(myInterests)
         method: "GET"
       })
       .done(function(response) {
+
+        $("#gify-view").empty();
+
+        console.log(response);
         
         for (var i = 0; i < 11; i++) {
         // save image_orignal_url property
-        var imageURL = response.data[i].images.fixed_height_still.url;
+        var imageURL = response.data[i].images.fixed_height_small.url;
+        var gifRating = response.data[i].rating;
 
-
-        console.log(response);
+        
         console.log(response.data[i].images.fixed_height_still.url);
+        console.log(gifRating);
 
         // console.log(response.data[i].images.fixed_height_still);
         // create and store image tag
@@ -71,16 +76,36 @@ console.log(myInterests)
 
         // setting the gifImage src attributes to imageURL
         gifImage.attr("src", imageURL);
-        // gifImage.attr("alt", "gif image");
+        gifImage.attr("alt", "gif image");
+        
 
-        $("#gify-view").prepend(gifImage)
+
+        $("#gify-view").prepend(gifRating);
+        $("#gify-view").prepend(gifImage);
+
+
        }
         // console.log(response);
       });
     }
 
+    // Pause the gif
+    $(document).on("click", ".gif", function(){
+
+      var state = $(this).attr("data-state");
+
+      if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+      } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+      }
+    });
+    
+
       $(document).on("click", ".gif", displayGifInfo);
-   
+      
 // Section 3: Main Process
 //  ===============================================================
 
