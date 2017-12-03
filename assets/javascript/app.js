@@ -3,7 +3,7 @@
 // Arrays and Variables for holding
 
 var myInterests = ["Coding", "Websites", "Video Games", "Music", "Sports", "Art"];
-var state
+
 console.log(myInterests)
 // Section 2: Functions
 // ================================================================
@@ -65,16 +65,16 @@ console.log(myInterests)
         console.log(response);
         
         // This loop generates 10 gifs
-        for (var i = 0; i < 11; i++) {
+        for (var i = 0; i < 10; i++) {
        
           // Get the response data back from api and save to variables
-        var imageURL = response.data[i].images.fixed_height.url;
+        var imageURL = response.data[i].images.fixed_height_still.url;
         var gifRating = response.data[i].rating;
-        var gifState = response.data[i].images.fixed_height_still.url;
+        var gifState = response.data[i].images.fixed_height.url;
 
         // Tests and Debugging
         
-        console.log(gifRating);
+        
 
         // create and store image tag
         var gifImage = $("<img>");
@@ -82,11 +82,13 @@ console.log(myInterests)
         // setting the gifImage src attributes to imageURL
         gifImage.attr("src", imageURL);
         gifImage.attr("alt", "gif image");
-        gifImage.attr("data-still", gifState)
-        gifImage.attr("data-animate", imageURL);
+        gifImage.attr("data-still", imageURL)
+        gifImage.attr("data-animate", gifState);
+        gifImage.attr("data-state", "still");
+        gifImage.attr("class", "gif-StopStateClass");
 
 
-        $("#gify-view").prepend(gifRating);
+        $("#gify-view").prepend("Rating: " + gifRating);
         $("#gify-view").prepend(gifImage);
        }
         // console.log(response);
@@ -96,8 +98,6 @@ console.log(myInterests)
     // Pause the gif
     function clickStopState() {
       var state = $(this).attr("data-state");
-
-      console.log("the state of the click " + state)
 
       if (state === "still") {
         $(this).attr("src", $(this).attr("data-animate"));
@@ -110,6 +110,7 @@ console.log(myInterests)
     
 
       $(document).on("click", ".gif", displayGifInfo);
+      $(document).on("click", ".gif-StopStateClass", clickStopState);
       
       
 // Section 3: Main Process

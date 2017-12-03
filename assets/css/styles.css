@@ -1,0 +1,27 @@
+body {
+	background-color: #2AF1F7;
+}
+.container {
+	background-color: lightgrey;
+	border: 2px solid;
+}
+
+h3 {
+	font-family: 'Indie Flower', cursive;
+}
+.gif{
+	padding: 5px;
+	margin: 10px;
+	
+}
+img {
+	margin: 10px;
+}
+.gifSubmitStyle {
+	margin: 5px;
+	padding: 5px;
+}
+
+form {
+	float: right;
+}
