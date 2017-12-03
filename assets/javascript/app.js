@@ -3,7 +3,7 @@
 // Arrays and Variables for holding
 
 var myInterests = ["Coding", "Websites", "Video Games", "Music", "Sports", "Art"];
-
+var state
 console.log(myInterests)
 // Section 2: Functions
 // ================================================================
@@ -44,13 +44,16 @@ console.log(myInterests)
       	renderButtons();
       });
 
+      // This function displays gif info
+
     function displayGifInfo() {
       var gif = $(this).attr("data-name");
       
-
+      //  variable with url for the api
       var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
         gif + "&api_key=dc6zaTOxFJmzC&limit=10";
       
+
       $.ajax({
         url: queryURL,
         method: "GET"
@@ -61,38 +64,40 @@ console.log(myInterests)
 
         console.log(response);
         
+        // This loop generates 10 gifs
         for (var i = 0; i < 11; i++) {
-        // save image_orignal_url property
-        var imageURL = response.data[i].images.fixed_height_small.url;
+       
+          // Get the response data back from api and save to variables
+        var imageURL = response.data[i].images.fixed_height.url;
         var gifRating = response.data[i].rating;
+        var gifState = response.data[i].images.fixed_height_still.url;
 
+        // Tests and Debugging
         
-        console.log(response.data[i].images.fixed_height_still.url);
         console.log(gifRating);
 
-        // console.log(response.data[i].images.fixed_height_still);
         // create and store image tag
         var gifImage = $("<img>");
 
         // setting the gifImage src attributes to imageURL
         gifImage.attr("src", imageURL);
         gifImage.attr("alt", "gif image");
-        
+        gifImage.attr("data-still", gifState)
+        gifImage.attr("data-animate", imageURL);
 
 
         $("#gify-view").prepend(gifRating);
         $("#gify-view").prepend(gifImage);
-
-
        }
         // console.log(response);
       });
     }
 
     // Pause the gif
-    $(document).on("click", ".gif", function(){
-
+    function clickStopState() {
       var state = $(this).attr("data-state");
+
+      console.log("the state of the click " + state)
 
       if (state === "still") {
         $(this).attr("src", $(this).attr("data-animate"));
@@ -101,10 +106,11 @@ console.log(myInterests)
         $(this).attr("src", $(this).attr("data-still"));
         $(this).attr("data-state", "still");
       }
-    });
+    };
     
 
       $(document).on("click", ".gif", displayGifInfo);
+      
       
 // Section 3: Main Process
 //  ===============================================================
